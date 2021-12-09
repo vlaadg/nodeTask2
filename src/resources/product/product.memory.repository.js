@@ -41,6 +41,7 @@ const deleteByOrderId = async (orderId) => {
 
 const getProductIdByOrderId = async (orderId) => {
     const productss = products.filter((product) => product.orderId === orderId)
+    return productss;
 }
 const updateById = async ({
     orderId,

@@ -26,23 +26,19 @@ const deleteById = async (id) => {
     return consumerDeletable;
 };
 
-const updateById = ({
-        id,
-        lastName,
-        firstName,
-        phoneNumber,
-        address
-    }) =>
-    consumersRepo.updateById({
-        id,
-        lastName,
-        firstName,
-        phoneNumber,
-        address
-    });
+const updateById = async (id) => ({
+    lastName,
+    firstName,
+    phoneNumber,
+    address
+}) => consumersRepo.updateById({
+    lastName,
+    firstName,
+    phoneNumber,
+    address
+});
 
-const getOrderIdByConsumerId = (id) =>
-    ordersRepo.getOrderIdByConsumerId(id)
+const getOrderIdByConsumerId = (id) => ordersRepo.getOrderIdByConsumerId(id)
 
 module.exports = {
     getAll,
