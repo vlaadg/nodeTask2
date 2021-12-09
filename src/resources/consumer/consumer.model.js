@@ -1,5 +1,6 @@
-const uuid = require('uuid');
-
+const {
+  v4: uuid
+} = require('uuid');
 class Consumer {
   constructor({
     id = uuid(),
