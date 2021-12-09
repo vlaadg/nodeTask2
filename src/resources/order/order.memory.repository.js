@@ -5,7 +5,7 @@ const orderList = [new Order()];
 
 const getAll = async () => orderList;
 
-const getById = async (id) => orderList.find((order) => order.id == id);
+const getById = async (id) => orderList.find((order) => order.id === id);
 
 const createOrder = async ({
     consumerId,
@@ -22,7 +22,7 @@ const createOrder = async ({
 }
 
 const deleteById = async (id) => {
-    const orderPos = orderList.findIndex((order) => order.id == id);
+    const orderPos = orderList.findIndex((order) => order.id === id);
 
     if (orderPos === -1) return null;
 
@@ -37,7 +37,7 @@ const updateById = async =>({
     date,
     deliveryTime
 }) => {
-    const orderPos = orderList.findIndex((order) => order.id == id);
+    const orderPos = orderList.findIndex((order) => order.id === id);
 
     if (orderPos === -1) return null;
 

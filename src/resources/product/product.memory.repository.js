@@ -4,7 +4,7 @@ const products = [new Product()]
 
 const getAll = async () => products;
 
-const getById = async (id) => products.find((product) => product.id == id);
+const getById = async (id) => products.find((product) => product.id === id);
 
 const createProduct = async ({
     orderId,
@@ -23,7 +23,7 @@ const createProduct = async ({
 }
 
 const deleteById = async (id) => {
-    const productPos = products.findIndex((product) => product.id == id);
+    const productPos = products.findIndex((product) => product.id === id);
 
     if (productPos === -1) return null;
 

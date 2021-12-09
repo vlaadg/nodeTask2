@@ -4,7 +4,7 @@ const consumers = [new Consumer()];
 
 const getAll = async () => consumers;
 
-const getById = async (id) => consumers.find((consumer) => consumer.id == id);
+const getById = async (id) => consumers.find((consumer) => consumer.id === id);
 
 const createConsumer = async ({
   lastName,
@@ -23,7 +23,7 @@ const createConsumer = async ({
 }
 
 const deleteById = async (id) => {
-  const consumerPosition = consumers.findIndex((consumer) => consumer.id == id);
+  const consumerPosition = consumers.findIndex((consumer) => consumer.id === id);
 
   if (consumerPosition === -1) return null;
 
@@ -39,7 +39,7 @@ const updateById = async ({
   phoneNumber,
   address
 }) => {
-  const consumerPosition = consumers.findIndex((consumer) => consumer.id == id);
+  const consumerPosition = consumers.findIndex((consumer) => consumer.id === id);
   if (consumerPosition === -1) return null;
 
   const oldConsumer = consumers[consumerPosition];
