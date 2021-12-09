@@ -33,13 +33,22 @@ const deleteById = async (id) => {
     return productDeletable;
 }
 
+const deleteByOrderId = async (orderId) => {
+    const orders = products.filter((product) => product.orderId === orderId);
+
+    await Promise.allSettled(orders.map(async (product) => deleteById(product.id)))
+}
+
+const getProductIdByOrderId = async (orderId) => {
+    const productss = products.filter((product) => product.orderId === orderId)
+}
 const updateById = async ({
     orderId,
     title,
     description,
     price
 }) => {
-    const productPos = products.findIndex((product) => proudct.id == id);
+    const productPos = products.findIndex((product) => proudct.id === id);
 
     if (productPos === -1) return null;
 
@@ -64,5 +73,7 @@ module.exports = {
     getById,
     createProduct,
     deleteById,
-    updateById
+    updateById,
+    deleteByOrderId,
+    getProductIdByOrderId
 }

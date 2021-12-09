@@ -1,4 +1,5 @@
 const Order = require('./order.model')
+const productsRepo = require('../product/product.memory.repository');
 
 const orderList = [new Order()];
 
@@ -53,6 +54,19 @@ const updateById = async =>({
     return newOrder;
 }
 
+const deleteByConsumerId = async (consumerId) => {
+    const orders = orderList.filter((order) => order.consumerId === consumerId);
+
+    await Promise.allSettled(orders.map(async (order) => {
+        deleteById(order.id);
+        productsRepo.deleteByOrderId(order.id);
+    }))
+}
+
+const getOrderIdByConsumerId = async (consumerId) => {
+    const orders = orderList.filter((order) => order.consumerId === consumerId)
+    return orders;
+}
 module.exports = {
     orders,
     getAll,
@@ -60,4 +74,6 @@ module.exports = {
     createOrder,
     deleteById,
     updateById,
+    deleteByConsumerId,
+    getOrderIdByConsumerId
 }
