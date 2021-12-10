@@ -1,10 +1,10 @@
 const Consumer = require('./consumer.model')
 
-const consumers = [new Consumer()];
+const Consumers = [new Consumer()];
 
-const getAll = async () => consumers;
+const getAll = async () => Consumers;
 
-const getById = async (id) => consumers.find((consumer) => consumer.id === id);
+const getById = async (id) => Consumers.find((consumer) => consumer.id === id);
 
 const createConsumer = async ({
   lastName,
@@ -18,19 +18,8 @@ const createConsumer = async ({
     phoneNumber,
     address
   })
-  consumers.push(consumer);
+  Consumers.push(consumer);
   return consumer;
-}
-
-const deleteById = async (id) => {
-  const consumerPosition = consumers.findIndex((consumer) => consumer.id === id);
-
-  if (consumerPosition === -1) return null;
-
-  const consumerDeletable = consumers[consumerPosition];
-
-  consumers.splice(consumerPosition, 1);
-  return consumerDeletable;
 }
 
 const updateById = async ({
@@ -39,10 +28,10 @@ const updateById = async ({
   phoneNumber,
   address
 }) => {
-  const consumerPosition = consumers.findIndex((consumer) => consumer.id === id);
-  if (consumerPosition === -1) return null;
+  const consumerPos = Consumers.findIndex((consumer) => consumer.id === id);
+  if (consumerPos === -1) return null;
 
-  const oldConsumer = consumers[consumerPosition];
+  const oldConsumer = Consumers[consumerPos];
 
   const newConsumer = {
     ...oldConsumer,
@@ -52,15 +41,26 @@ const updateById = async ({
     address
   };
 
-  consumers.splice(consumerPosition, 1, newConsumer);
+  Consumers.splice(consumerPos, 1, newConsumer);
   return newMenu;
 };
 
+const deleteById = async (id) => {
+  const consumerPos = Consumers.findIndex((consumer) => consumer.id === id);
+
+  if (consumerPos === -1) return null;
+
+  const consumerDeletable = Consumers[consumerPos];
+
+  Consumers.splice(consumerPos, 1);
+  return consumerDeletable;
+}
+
 module.exports = {
-  consumers,
+  Consumers,
   getAll,
   getById,
   createConsumer,
-  deleteById,
-  updateById
+  updateById,
+  deleteById
 };

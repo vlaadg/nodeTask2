@@ -1,16 +1,29 @@
 const ordersRepo = require('./order.memory.repository');
-const consumersRepo = require('../consumer/consumer.memory.repository');
 const productsRepo = require('../product/product.memory.repository');
 
 const getAll = () => ordersRepo.getAll();
 
 const getById = (id) => ordersRepo.getById(id);
 
+const getProductsByOrderId = (id) => productsRepo.getProductsByOrderId(id);
+
 const createOrder = ({
+    id
     consumerId,
     date,
     deliveryTime
 }) => ordersRepo.createOrder({
+    id
+    consumerId,
+    date,
+    deliveryTime
+});
+
+const updateById = async (id) => ({
+    consumerId,
+    date,
+    deliveryTime
+}) => ordersRepo.updateById({
     consumerId,
     date,
     deliveryTime
@@ -23,23 +36,12 @@ const deleteById = async (id) => {
     return orderDeletable;
 }
 
-const updateById = async (id) => ({
-    consumerId,
-    date,
-    deliveryTime
-}) => ordersRepo.updateById({
-    consumerId,
-    date,
-    deliveryTime
-});
-
-const getProductIdByOrderId = (id) => productsRepo.getProductIdByOrderId(id);
 
 module.exports = {
     getAll,
     getById,
+    getProductsByOrderId,
     createOrder,
-    deleteById,
     updateById,
-    getProductIdByOrderId,
+    deleteById
 }

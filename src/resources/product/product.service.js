@@ -1,6 +1,5 @@
 const productsRepo = require('./product.memory.repository');
-const ordersRepo = require('../order/order.memory.repository');
-const consumersRepo = require('../consumer/consumer.memory.repository');
+
 
 const getAll = () => productsRepo.getAll();
 

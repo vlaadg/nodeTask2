@@ -1,11 +1,16 @@
 const Order = require('./order.model')
 const productsRepo = require('../product/product.memory.repository');
 
-const orderList = [new Order()];
+const Orders = [new Order()];
 
-const getAll = async () => orderList;
+const getAll = async () => Orders;
 
-const getById = async (id) => orderList.find((order) => order.id === id);
+const getById = async (id) => Orders.find((order) => order.id === id);
+
+const getOrdersByConsumerId = async (consumerId) => {
+    const orders = Orders.filter((order) => order.consumerId === consumerId);
+    return orders;
+}
 
 const createOrder = async ({
     consumerId,
@@ -17,19 +22,8 @@ const createOrder = async ({
         date,
         deliveryTime
     })
-    orderList.push(order);
+    Orders.push(order);
     return order;
-}
-
-const deleteById = async (id) => {
-    const orderPos = orderList.findIndex((order) => order.id === id);
-
-    if (orderPos === -1) return null;
-
-    const orderDeletable = orderList[orderPos];
-
-    orderList.splice(orderPos, 1);
-    return orderDeletable;
 }
 
 const updateById = async =>({
@@ -37,11 +31,11 @@ const updateById = async =>({
     date,
     deliveryTime
 }) => {
-    const orderPos = orderList.findIndex((order) => order.id === id);
+    const orderPos = Orders.findIndex((order) => order.id === id);
 
     if (orderPos === -1) return null;
 
-    const oldOrder = orderList[orderPos];
+    const oldOrder = Orders[orderPos];
 
     const newOrder = {
         ...oldOrder,
@@ -50,12 +44,23 @@ const updateById = async =>({
         deliveryTime
     };
 
-    orderList.splice(orderPos, 1, newOrder);
+    Orders.splice(orderPos, 1, newOrder);
     return newOrder;
 }
 
+const deleteById = async (id) => {
+    const orderPos = Orders.findIndex((order) => order.id === id);
+
+    if (orderPos === -1) return null;
+
+    const orderDeletable = Orders[orderPos];
+
+    Orders.splice(orderPos, 1);
+    return orderDeletable;
+}
+
 const deleteByConsumerId = async (consumerId) => {
-    const orders = orderList.filter((order) => order.consumerId === consumerId);
+    const orders = Orders.filter((order) => order.consumerId === consumerId);
 
     await Promise.allSettled(orders.map(async (order) => {
         deleteById(order.id);
@@ -63,17 +68,13 @@ const deleteByConsumerId = async (consumerId) => {
     }))
 }
 
-const getOrderIdByConsumerId = async (consumerId) => {
-    const orders = orderList.filter((order) => order.consumerId === consumerId)
-    return orders;
-}
 module.exports = {
-    orders,
+    Orders,
     getAll,
     getById,
+    getOrdersByConsumerId,
     createOrder,
-    deleteById,
     updateById,
-    deleteByConsumerId,
-    getOrderIdByConsumerId
+    deleteById,
+    deleteByConsumerId
 }

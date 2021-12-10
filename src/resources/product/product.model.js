@@ -1,4 +1,6 @@
-const { v4: uuid } = require('uuid');
+const {
+    v4: uuid
+} = require('uuid');
 
 class Product {
     constructor({
