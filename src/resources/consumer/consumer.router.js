@@ -74,7 +74,7 @@ router.route('/').post(
     });
 
     if (consumer) {
-      res.status(StatusCodes.CREATED).json(Consumer.toResponse(menu));
+      res.status(StatusCodes.CREATED).json(Consumer.toResponse(consumer));
     } else {
       res
         .status(StatusCodes.BAD_REQUEST)
