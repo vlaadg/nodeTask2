@@ -42,10 +42,6 @@ const deleteById = async (id) => {
     return consumerDeletable;
 };
 
-
-
-
-
 module.exports = {
     getAll,
     getById,

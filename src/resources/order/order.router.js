@@ -57,6 +57,7 @@ router.route('/:id/products').get(
         }
     })
 );
+
 router.route('/').post(
     catchErrors(async (req, res) => {
         const {
