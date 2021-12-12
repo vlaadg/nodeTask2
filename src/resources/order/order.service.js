@@ -8,12 +8,12 @@ const getById = (id) => ordersRepo.getById(id);
 const getProductsByOrderId = (id) => productsRepo.getProductsByOrderId(id);
 
 const createOrder = ({
-    id
+    id,
     consumerId,
     date,
     deliveryTime
 }) => ordersRepo.createOrder({
-    id
+    id,
     consumerId,
     date,
     deliveryTime

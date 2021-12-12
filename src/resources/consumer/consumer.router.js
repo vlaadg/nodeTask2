@@ -1,6 +1,7 @@
 const {
   StatusCodes
 } = require('http-status-codes');
+
 const router = require('express').Router();
 const Consumer = require('./consumer.model');
 const Order = require('../order/order.model');
@@ -14,7 +15,7 @@ router.route('/').get(
 
     res.json(consumers.map(Consumer.toResponse));
   })
-};
+);
 
 router.route(':/:id').get(
   catchErrors(async (req, res) => {

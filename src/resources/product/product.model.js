@@ -7,7 +7,7 @@ class Product {
         id = uuid(),
         orderId = 'null',
         title = 'sofa',
-        description = 'good'
+        description = 'good',
         price = 100
     } = {}) {
         this.id = id;

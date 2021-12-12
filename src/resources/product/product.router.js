@@ -13,7 +13,7 @@ router.route('/').get(
 
         res.json(products.map(Order.toResponse));
     })
-};
+);
 
 router.route(':/:id').get(
     catchErrors(async (req, res) => {
