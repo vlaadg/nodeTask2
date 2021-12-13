@@ -22,7 +22,7 @@ const createConsumer = async ({
   return consumer;
 }
 
-const updateById = async ({
+const updateById = async (id) => ({
   lastName,
   firstName,
   phoneNumber,
@@ -42,7 +42,7 @@ const updateById = async ({
   };
 
   Consumers.splice(consumerPos, 1, newConsumer);
-  return newMenu;
+  return newConsumer;
 };
 
 const deleteById = async (id) => {

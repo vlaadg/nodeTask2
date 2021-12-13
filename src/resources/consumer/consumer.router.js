@@ -101,6 +101,7 @@ router.route(':/:id').put(
     } = req.body;
 
     const consumer = await consumersService.updateById({
+      id,
       lastName,
       fristName,
       phoneNumber,

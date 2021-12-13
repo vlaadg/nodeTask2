@@ -11,7 +11,7 @@ router.route('/').get(
     catchErrors(async (req, res) => {
         const products = await productsService.getAll();
 
-        res.json(products.map(Order.toResponse));
+        res.json(products.map(Product.toResponse));
     })
 );
 
@@ -24,7 +24,7 @@ router.route(':/:id').get(
         const product = await productsService.getById(id);
 
         if (product) {
-            res.json(Order.toResponse(product));
+            res.json(Product.toResponse(product));
         } else {
             res
                 .status(StatusCodes.NOT_FOUND)
@@ -77,6 +77,7 @@ router.route(':/:id').put(
         } = req.body;
 
         const product = await productsService.updateById({
+            id,
             orderId,
             title,
             description,
@@ -84,7 +85,7 @@ router.route(':/:id').put(
         });
 
         if (product) {
-            res.status(StatusCodes.OK).json(Product.toResponse(proudct));
+            res.status(StatusCodes.OK).json(Product.toResponse(product));
         } else {
             res
                 .status(StatusCodes.NOT_FOUND)

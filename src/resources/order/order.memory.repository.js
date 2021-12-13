@@ -26,7 +26,7 @@ const createOrder = async ({
     return order;
 }
 
-const updateById = async =>({
+const updateById = async (id) => ({
     consumerId,
     date,
     deliveryTime

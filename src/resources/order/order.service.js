@@ -24,6 +24,7 @@ const updateById = async (id) => ({
     date,
     deliveryTime
 }) => ordersRepo.updateById({
+    id,
     consumerId,
     date,
     deliveryTime

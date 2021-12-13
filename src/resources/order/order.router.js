@@ -46,7 +46,7 @@ router.route('/:id/products').get(
         const orders = await ordersService.getProductsByOrderId(id);
 
         if (orders) {
-            res.json(orders.map((ord) => Order.toResponse(ord)));
+            res.json(orders.map((ord) => Product.toResponse(ord)));
         } else {
             res
                 .status(StatusCodes.NOT_FOUND)
@@ -96,7 +96,8 @@ router.route(':/:id').put(
             deliveryTime
         } = req.body;
 
-        const con = await ordersService.updateById({
+        const order = await ordersService.updateById({
+            id,
             consumerId,
             date,
             deliveryTime

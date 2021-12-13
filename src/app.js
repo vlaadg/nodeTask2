@@ -1,7 +1,7 @@
 const express = require('express');
-const consumerRouter = require('../src/resources/consumer/consumer.router');
-const orderRouter = require('../src/resources/order/order.router');
-const productRouter = require('../src/resources/product/product.router');
+const consumerRouter = require("./resources/consumer/consumer.router");
+const orderRouter = require("./resources/order/order.router");
+const productRouter = require("./resources/product/product.router");
 
 const app = express();
 

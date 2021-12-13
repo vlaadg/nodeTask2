@@ -28,6 +28,7 @@ const updateById = async (id) => ({
     phoneNumber,
     address
 }) => consumersRepo.updateById({
+    id,
     lastName,
     firstName,
     phoneNumber,

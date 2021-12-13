@@ -1,6 +1,5 @@
 const productsRepo = require('./product.memory.repository');
 
-
 const getAll = () => productsRepo.getAll();
 
 const getById = (id) => productsRepo.getById(id);
@@ -25,6 +24,7 @@ const updateById = async (id) => ({
     description,
     price
 }) => productsRepo.updateById({
+    id,
     orderId,
     title,
     description,

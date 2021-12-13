@@ -27,7 +27,7 @@ const createProduct = async ({
     return product
 }
 
-const updateById = async ({
+const updateById = async (id) => ({
     orderId,
     title,
     description,
@@ -47,7 +47,7 @@ const updateById = async ({
         price
     };
 
-    products.splice(productPos, 1, newProduct);
+    Products.splice(productPos, 1, newProduct);
     return newProduct;
 
 };
