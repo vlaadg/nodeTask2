@@ -1,5 +1,7 @@
 const express = require('express');
-const userRouter = require('./resources/users/user.router');
+const consumerRouter = require("./resources/consumer/consumer.router");
+const orderRouter = require("./resources/order/order.router");
+const productRouter = require("./resources/product/product.router");
 
 const app = express();
 
@@ -13,6 +15,8 @@ app.use('/', (req, res, next) => {
   next();
 });
 
-app.use('/users', userRouter);
+app.use('/consumers', consumerRouter);
+app.use('/orders', orderRouter);
+app.use('/products', productRouter);
 
 module.exports = app;

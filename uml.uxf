@@ -1,0 +1,68 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>35</x><y>190</y><w>220</w><h>150</h></coordinates><panel_attributes>_class: Consumer_
+--
+id: String
+lastName: String
+firstName: String
+phoneNumber: String
+address: String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>395</x><y>190</y><w>210</w><h>150</h></coordinates><panel_attributes>_class: Order_
+--
+id: String
+consumerId: String | null
+date: String
+deliveryTime: String
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>244</x><y>257</y><w>170</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;-
+m1=1..n
+m2=1</panel_attributes><additional_attributes>150;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>243</x><y>67</y><w>290</w><h>140</h></coordinates><panel_attributes>lt=-&gt;&gt;
+m2=1
+m1=1..n</panel_attributes><additional_attributes>10;10;260;10;260;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>35</x><y>0</y><w>220</w><h>150</h></coordinates><panel_attributes>_class: Product_
+--
+id: String
+orderId: String || null
+title: String
+descprition: String
+price: Number
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>31</x><y>346</y><w>580</w><h>510</h></coordinates><panel_attributes>Task
+--
+style=wordwrap
+
+Consumer (/consumers endpoint):
+ • GET /consumers - вернет всех покупателей в системе
+ • GET /consumer/:consumerId - вернет покупателя с заданным :consumerId
+ • GET /consumers/:consumerId/orders - вернет все заказы связанные с покупкупателем :consumerId
+ • POST /consumers - создаст покупателя
+ • PUT /consumers/:consumerId - обновит покупателя с заднным :consumerId
+ • DELETE /consumers/:consumerId - удалит покупателя с заданным :consumerId
+
+-..
+!!! При удалении записи типа Consumer необходимо удалить связанные с ней записи типа Order. !!!
+--
+
+Order (/orders endpoint):
+ • GET /orders - вернет все заказы в системе
+ • GET /orders/:orderId - вернет заказ с заданным :orderId
+ • GET /orders/:orderId/products - вернет все товары связанные с заказом :orderId
+ • POST /orders - создаст заказ и привяжет tuj к существующему покупателю (id покупателя передается в теле запроса или как query-параметр)
+ • PUT /orders/:orderId - обновит заказ с заднным :orderId
+ • DELETE /orders/:orderId - удалит заказ с заданным :orderId
+
+-..
+!!! При удалении записи типа Order необходимо удалить связанные с ней записи типа Product. !!!
+--
+
+Product (/products endpoint):
+ • GET /products - вернет все товары в системе
+ • GET /products/:productId - вернет товар с заданным :productId
+ • POST /products/:productId - создаст товар и привяжет его к существуещему заказу (id заказа передаеться в теле запроса или как query-параметр)
+ • PUT /products/:productId - обновит заказ с заднным :productsId
+ • DELETE /products/:productId - удалит заказ с заданным :productrId
+
+--
+
+
+
+
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>
