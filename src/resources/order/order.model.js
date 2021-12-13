@@ -5,7 +5,7 @@ const {
 class Order {
     constructor({
         id = uuid(),
-        consumerId = 'null',
+        consumerId = '1f4604c3-132a-49e1-b346-78b77be6f6bb',
         date = '24.05.2001',
         deliveryTime = '1 hour'
     } = {}) {

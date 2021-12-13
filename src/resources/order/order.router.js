@@ -16,7 +16,7 @@ router.route('/').get(
     })
 );
 
-router.route(':/:id').get(
+router.route('/:id').get(
     catchErrors(async (req, res) => {
         const {
             id
@@ -85,7 +85,7 @@ router.route('/').post(
     })
 );
 
-router.route(':/:id').put(
+router.route('/:id').put(
     catchErrors(async (req, res) => {
         const {
             id
