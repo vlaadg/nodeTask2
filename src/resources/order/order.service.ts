@@ -1,8 +1,8 @@
+import { IProduct } from '../product/product.interface';
 import ordersRepo from './order.memory.repository';
 import productsRepo from '../product/product.memory.repository';
 
 import { IBaseOrder, IOrder } from './order.interface';
-import { IProduct } from 'resources/product/product.interface';
 
 
 const getAll = async (): Promise<IOrder[]> => ordersRepo.getAll();

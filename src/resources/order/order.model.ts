@@ -6,9 +6,13 @@ import { IOrder, IBaseOrderPartial, IBaseOrderResponse } from './order.interface
 
 class Order {
     id: string;
+
     consumerId: string | null;
+
     date: string;
+
     deliveryTime: string;
+
     constructor({
         consumerId = 'null',
         date = '24.05.2001',

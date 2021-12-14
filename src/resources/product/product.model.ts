@@ -6,10 +6,15 @@ import { IBaseProductPartial, IProduct } from './product.interface';
 
 class Product {
     id: string;
+
     orderId: string | null;
+
     title: string;
+
     description: string;
+
     price: number;
+
     constructor({
         orderId = 'null',
         title = 'sofa',

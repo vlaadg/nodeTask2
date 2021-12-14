@@ -6,9 +6,13 @@ import { IConsumer, IBaseConsumerPartial, IBaseConsumerResponse } from './consum
 
 class Consumer {
   id: string;
+
   lastName: string;
+
   firstName: string;
+
   phoneNumber: string;
+
   address: string;
 
   constructor({
