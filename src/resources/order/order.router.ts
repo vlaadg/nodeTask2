@@ -1,15 +1,17 @@
-const {
-    StatusCodes
-} = require('http-status-codes');
-const router = require('express').Router();
-const Product = require('../product/product.model');
-const Order = require('./order.model');
+import { Request, Response, Router } from 'express';
+import { StatusCodes } from 'http-status-codes';
 
-const ordersService = require('./order.service');
-const catchErrors = require('../../common/catchErrors');
+
+import Product from '../product/product.model';
+import Order from './order.model';
+
+import ordersService from './order.service';
+import catchErrors from '../../common/catchErrors';
+
+const router = Router();
 
 router.route('/').get(
-    catchErrors(async (req, res) => {
+    catchErrors(async (_req: Request, res: Response) => {
         const orders = await ordersService.getAll();
 
         res.json(orders.map(Order.toResponse));
@@ -17,12 +19,12 @@ router.route('/').get(
 );
 
 router.route('/:id').get(
-    catchErrors(async (req, res) => {
+    catchErrors(async (req: Request, res: Response) => {
         const {
             id
         } = req.params;
 
-        const order = await ordersService.getById(id);
+        const order = await ordersService.getById(id || '');
 
         if (order) {
             res.json(Order.toResponse(order));
@@ -38,12 +40,12 @@ router.route('/:id').get(
 );
 
 router.route('/:id/products').get(
-    catchErrors(async (req, res) => {
+    catchErrors(async (req: Request, res: Response) => {
         const {
             id
         } = req.params;
 
-        const orders = await ordersService.getProductsByOrderId(id);
+        const orders = await ordersService.getProductsByOrderId(id || '');
 
         if (orders) {
             res.json(orders.map((ord) => Product.toResponse(ord)));
@@ -59,7 +61,7 @@ router.route('/:id/products').get(
 );
 
 router.route('/').post(
-    catchErrors(async (req, res) => {
+    catchErrors(async (req: Request, res: Response) => {
         const {
             consumerId,
             date,
@@ -86,7 +88,7 @@ router.route('/').post(
 );
 
 router.route('/:id').put(
-    catchErrors(async (req, res) => {
+    catchErrors(async (req: Request, res: Response) => {
         const {
             id
         } = req.params;
@@ -97,7 +99,7 @@ router.route('/:id').put(
         } = req.body;
 
         const order = await ordersService.updateById({
-            id,
+            id: id || '',
             consumerId,
             date,
             deliveryTime
@@ -117,12 +119,12 @@ router.route('/:id').put(
 );
 
 router.route('/:id').delete(
-    catchErrors(async (req, res) => {
+    catchErrors(async (req: Request, res: Response) => {
         const {
             id
         } = req.params;
 
-        const order = await ordersService.deleteById(id);
+        const order = await ordersService.deleteById(id || '');
 
         if (!order) {
             return res
@@ -142,4 +144,4 @@ router.route('/:id').delete(
     })
 );
 
-module.exports = router;
+export default router;
