@@ -47,7 +47,7 @@ router.route('/').post(
             price
         } = req.body;
         const product = await productsService.createProduct({
-            orderId,
+            orderId: orderId || '',
             title,
             description,
             price
@@ -80,7 +80,7 @@ router.route('/:id').put(
 
         const product = await productsService.updateById({
             id: id || '',
-            orderId,
+            orderId: orderId || '',
             title,
             description,
             price

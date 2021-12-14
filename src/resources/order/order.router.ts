@@ -69,7 +69,7 @@ router.route('/').post(
         } = req.body;
 
         const order = await ordersService.createOrder({
-            consumerId,
+            consumerId: consumerId || '',
             date,
             deliveryTime
         });
@@ -100,7 +100,7 @@ router.route('/:id').put(
 
         const order = await ordersService.updateById({
             id: id || '',
-            consumerId,
+            consumerId: consumerId || '',
             date,
             deliveryTime
         });
