@@ -5,13 +5,13 @@ import { IBaseOrder, IOrder } from './order.interface';
 import { IProduct } from 'resources/product/product.interface';
 
 
-const getAll = (): Promise<IOrder[]> => ordersRepo.getAll();
+const getAll = async (): Promise<IOrder[]> => ordersRepo.getAll();
 
-const getById = (id: string): Promise<IOrder | null> => ordersRepo.getById(id);
+const getById = async (id: string): Promise<IOrder | null> => ordersRepo.getById(id);
 
-const getProductsByOrderId = (id: string): Promise<IProduct[] | null> => productsRepo.getProductsByOrderId(id);
+const getProductsByOrderId = async (id: string): Promise<IProduct[] | null> => productsRepo.getProductsByOrderId(id);
 
-const createOrder = (order: IBaseOrder): Promise<IOrder> => ordersRepo.createOrder(order);
+const createOrder = async (order: IBaseOrder): Promise<IOrder> => ordersRepo.createOrder(order);
 
 const updateById = async (order: IOrder): Promise<IOrder | null> => ordersRepo.updateById(order);
 
