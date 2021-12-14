@@ -9,7 +9,7 @@
   "main": "src/server.ts",
   "scripts": {
     "tsc:w": "tsc -w",
-    "start": "nodemon src/server.ts",
+    "start": "NODE_ENV=development nodemon src/server.ts",
     "lint": "eslint --ext .js,.ts --fix src/"
   },
   "keywords": [
