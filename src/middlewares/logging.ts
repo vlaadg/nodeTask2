@@ -1,7 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
-import { pipeline } from 'stream';
+import stream from 'stream';
+import util from 'util';
+
+const pipeline = util.promisify(stream.pipeline);
 
 import config from '../common/config';
 
@@ -9,12 +12,6 @@ const { PORT } = config;
 
 export const logging = async (req: Request, res: Response, next: NextFunction) => {
     const requestTime = new Date();
-    const method = req.method;
-    const url = `http://localhost:${PORT}${req.baseUrl + req.url}`;
-    const body = JSON.stringify(req.body);
-    const query = JSON.stringify(req.query);
-    const params = JSON.stringify(req.params);
-    const statusCode = res.statusCode;
     const processTime = Date.now() - + requestTime;
 
     const logsFolder = path.join(__dirname, '../../logs');
@@ -23,25 +20,22 @@ export const logging = async (req: Request, res: Response, next: NextFunction) =
         fs.mkdirSync(logsFolder);
     }
 
-    await pipeline(
-        `
- Request:
-     request Time:     ${requestTime}
-     method:           ${method}
-     url:              ${url}
-     body:             ${body}
-     query:            ${query}
-     params:           ${params}
-     processing time:  ${processTime} ms
- Response:
-     status code:      ${statusCode}\n`,
-        fs.createWriteStream(path.join(__dirname, '../../logs/logging.txt'), { flags: 'a' }),
-        (error) => {
-            if (error) {
-                process.stderr.write(error.message);
-                process.exit(1);
-            }
-        },
-    );
+    try {
+        await pipeline(
+            stream.Readable.from(`
+        request Time:     ${requestTime}
+        method:           ${req.method}
+        url:              ${`http://localhost:${PORT}${req.baseUrl + req.url}`}
+        body:             ${JSON.stringify(req.body)}
+        query:            ${JSON.stringify(req.query)}
+        params:           ${JSON.stringify(req.params)}
+        processing time:  ${processTime} ms
+        status code:      ${res.statusCode}\n`),
+            fs.createWriteStream(path.join(__dirname, '../../logs/logging.txt'), { flags: 'a' }),
+        );
+    } catch (er) {
+        process.stderr.write(`${console.error(er)}`);
+        process.exit(1);
+    }
     next();
 };
