@@ -1,16 +1,17 @@
-const {
-  StatusCodes
-} = require('http-status-codes');
+import { Request, Response, Router } from 'express';
+import { StatusCodes } from 'http-status-codes';
 
-const router = require('express').Router();
-const Consumer = require('./consumer.model');
-const Order = require('../order/order.model');
 
-const consumersService = require('./consumer.service');
-const catchErrors = require('../../common/catchErrors');
+import Consumer from './consumer.model';
+import Order from '../order/order.model';
+
+import consumersService from './consumer.service';
+import catchErrors from '../../common/catchErrors';
+
+const router = Router();
 
 router.route('/').get(
-  catchErrors(async (req, res) => {
+  catchErrors(async (_req: Request, res: Response) => {
     const consumers = await consumersService.getAll();
 
     res.json(consumers.map(Consumer.toResponse));
@@ -18,12 +19,12 @@ router.route('/').get(
 );
 
 router.route('/:id').get(
-  catchErrors(async (req, res) => {
+  catchErrors(async (req: Request, res: Response) => {
     const {
       id
     } = req.params;
 
-    const consumer = await consumersService.getById(id);
+    const consumer = await consumersService.getById(id || '');
 
     if (consumer) {
       res.json(Consumer.toResponse(consumer));
@@ -39,12 +40,12 @@ router.route('/:id').get(
 );
 
 router.route('/:id/orders').get(
-  catchErrors(async (req, res) => {
+  catchErrors(async (req: Request, res: Response) => {
     const {
       id
     } = req.params;
 
-    const orders = await consumersService.getOrdersByConsumerId(id);
+    const orders = await consumersService.getOrdersByConsumerId(id || '');
 
     if (orders) {
       res.json(orders.map((ord) => Order.toResponse(ord)));
@@ -60,17 +61,17 @@ router.route('/:id/orders').get(
 );
 
 router.route('/').post(
-  catchErrors(async (req, res) => {
+  catchErrors(async (req: Request, res: Response) => {
     const {
       lastName,
-      fristName,
+      firstName,
       phoneNumber,
       address
     } = req.body;
 
     const consumer = await consumersService.createConsumer({
       lastName,
-      fristName,
+      firstName,
       phoneNumber,
       address
     });
@@ -89,21 +90,21 @@ router.route('/').post(
 );
 
 router.route('/:id').put(
-  catchErrors(async (req, res) => {
+  catchErrors(async (req: Request, res: Response) => {
     const {
       id
     } = req.params;
     const {
       lastName,
-      fristName,
+      firstName,
       phoneNumber,
       address
     } = req.body;
 
     const consumer = await consumersService.updateById({
-      id,
+      id: id || '',
       lastName,
-      fristName,
+      firstName,
       phoneNumber,
       address
     });
@@ -122,12 +123,12 @@ router.route('/:id').put(
 );
 
 router.route('/:id').delete(
-  catchErrors(async (req, res) => {
+  catchErrors(async (req: Request, res: Response) => {
     const {
       id
     } = req.params;
 
-    const consumer = await consumersService.deleteById(id);
+    const consumer = await consumersService.deleteById(id || '');
 
     if (!consumer) {
       return res
@@ -147,4 +148,4 @@ router.route('/:id').delete(
   })
 );
 
-module.exports = router;
+export default router;

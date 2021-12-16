@@ -1,21 +1,30 @@
-const {
-    v4: uuid
-} = require('uuid');
+import {
+    v4 as uuid
+} from 'uuid';
+
+import { IOrder, IBaseOrderPartial, IBaseOrderResponse } from './order.interface';
 
 class Order {
+    id: string;
+
+    consumerId: string | null;
+
+    date: string;
+
+    deliveryTime: string;
+
     constructor({
-        id = uuid(),
-        consumerId = '1f4604c3-132a-49e1-b346-78b77be6f6bb',
+        consumerId = 'null',
         date = '24.05.2001',
         deliveryTime = '1 hour'
-    } = {}) {
-        this.id = id;
+    }: IBaseOrderPartial = {}) {
+        this.id = uuid();
         this.consumerId = consumerId;
         this.date = date;
         this.deliveryTime = deliveryTime;
     }
 
-    static toResponse(order) {
+    static toResponse(order: IOrder): IBaseOrderResponse {
         const {
             id,
             consumerId,
@@ -31,4 +40,4 @@ class Order {
     }
 }
 
-module.exports = Order;
+export default Order;

@@ -1,14 +1,16 @@
-const {
-    StatusCodes
-} = require('http-status-codes');
-const router = require('express').Router();
-const Product = require('./product.model');
+import { StatusCodes } from 'http-status-codes';
+import { Request, Response, Router } from 'express';
 
-const productsService = require('./product.service');
-const catchErrors = require('../../common/catchErrors');
+
+import Product from './product.model';
+
+import productsService from './product.service';
+import catchErrors from '../../common/catchErrors';
+
+const router = Router();
 
 router.route('/').get(
-    catchErrors(async (req, res) => {
+    catchErrors(async (_req: Request, res: Response) => {
         const products = await productsService.getAll();
 
         res.json(products.map(Product.toResponse));
@@ -16,12 +18,12 @@ router.route('/').get(
 );
 
 router.route('/:id').get(
-    catchErrors(async (req, res) => {
+    catchErrors(async (req: Request, res: Response) => {
         const {
             id
         } = req.params;
 
-        const product = await productsService.getById(id);
+        const product = await productsService.getById(id || '');
 
         if (product) {
             res.json(Product.toResponse(product));
@@ -37,7 +39,7 @@ router.route('/:id').get(
 );
 
 router.route('/').post(
-    catchErrors(async (req, res) => {
+    catchErrors(async (req: Request, res: Response) => {
         const {
             orderId,
             title,
@@ -45,7 +47,7 @@ router.route('/').post(
             price
         } = req.body;
         const product = await productsService.createProduct({
-            orderId,
+            orderId: orderId || '',
             title,
             description,
             price
@@ -65,7 +67,7 @@ router.route('/').post(
 );
 
 router.route('/:id').put(
-    catchErrors(async (req, res) => {
+    catchErrors(async (req: Request, res: Response) => {
         const {
             id
         } = req.params;
@@ -77,8 +79,8 @@ router.route('/:id').put(
         } = req.body;
 
         const product = await productsService.updateById({
-            id,
-            orderId,
+            id: id || '',
+            orderId: orderId || '',
             title,
             description,
             price
@@ -98,12 +100,12 @@ router.route('/:id').put(
 );
 
 router.route('/:id').delete(
-    catchErrors(async (req, res) => {
+    catchErrors(async (req: Request, res: Response) => {
         const {
             id
         } = req.params;
 
-        const product = await productsService.deleteById(id);
+        const product = await productsService.deleteById(id || '');
 
         if (!product) {
             return res
@@ -123,4 +125,4 @@ router.route('/:id').delete(
     })
 );
 
-module.exports = router;
+export default router;

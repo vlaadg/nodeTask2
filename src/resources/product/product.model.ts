@@ -1,23 +1,34 @@
-const {
-    v4: uuid
-} = require('uuid');
+import {
+    v4 as uuid
+} from 'uuid';
+
+import { IBaseProductPartial, IProduct } from './product.interface';
 
 class Product {
+    id: string;
+
+    orderId: string | null;
+
+    title: string;
+
+    description: string;
+
+    price: number;
+
     constructor({
-        id = uuid(),
         orderId = 'null',
         title = 'sofa',
         description = 'good',
         price = 100
-    } = {}) {
-        this.id = id;
+    }: IBaseProductPartial = {}) {
+        this.id = uuid();
         this.orderId = orderId;
         this.title = title;
         this.description = description;
         this.price = price;
     }
 
-    static toResponse(product) {
+    static toResponse(product: IProduct): IProduct {
         const {
             id,
             orderId,
@@ -35,4 +46,4 @@ class Product {
     }
 }
 
-module.exports = Product;
+export default Product;
