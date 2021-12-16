@@ -8,11 +8,15 @@ import consumerRouter from "./resources/consumer/consumer.router";
 import orderRouter from "./resources/order/order.router";
 import productRouter from "./resources/product/product.router";
 
+import { logging } from './middlewares';
+
 const app = express();
 
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 app.use(express.json());
+
+app.use(logging);
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
