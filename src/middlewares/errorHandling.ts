@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 import fs from 'fs';
 import path from 'path';
@@ -11,7 +11,6 @@ export const errorHandling = async (
     error: Error,
     _req: Request,
     res: Response,
-    _next: NextFunction,
 ) => {
     const { name, message, stack } = error;
     const statusCode = name === 'Error' ? StatusCodes.NOT_FOUND : StatusCodes.INTERNAL_SERVER_ERROR;
