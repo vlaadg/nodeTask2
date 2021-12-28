@@ -16,6 +16,7 @@ export const errorHandling = async (
     const { name, message, stack } = error;
     const statusCode = name === 'Error' ? StatusCodes.NOT_FOUND : StatusCodes.INTERNAL_SERVER_ERROR;
     const logsFolder = path.join(__dirname, '../../logs');
+    const errorTime = new Date();
 
     if (!fs.existsSync(logsFolder)) {
         fs.mkdirSync(logsFolder);
@@ -24,6 +25,7 @@ export const errorHandling = async (
     try {
         await pipeline(
             stream.Readable.from(`
+      errorTime:       ${errorTime}
       status code:     ${statusCode}
       errorName:       ${name}
       errorMessage:    ${message}
@@ -38,6 +40,6 @@ export const errorHandling = async (
         process.exit(1);
     }
 
-    res.status(500).send('Internal server error');
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
     next();
 };
