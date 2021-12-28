@@ -27,9 +27,11 @@ app.use('/', (req, res, next) => {
 });
 
 app.use(logging);
+
 app.use('/consumers', consumerRouter);
 app.use('/orders', orderRouter);
 app.use('/products', productRouter);
+
 app.use(errorHandling);
 
 export default app;

@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import { StatusCodes, getReasonPhrase } from 'http-status-codes';
+import { NextFunction, Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import fs from 'fs';
 import path from 'path';
 import stream from 'stream';
@@ -11,10 +11,10 @@ export const errorHandling = async (
     error: Error,
     _req: Request,
     res: Response,
+    next: NextFunction,
 ) => {
     const { name, message, stack } = error;
     const statusCode = name === 'Error' ? StatusCodes.NOT_FOUND : StatusCodes.INTERNAL_SERVER_ERROR;
-    const messageReason = getReasonPhrase(statusCode);
     const logsFolder = path.join(__dirname, '../../logs');
 
     if (!fs.existsSync(logsFolder)) {
@@ -24,19 +24,20 @@ export const errorHandling = async (
     try {
         await pipeline(
             stream.Readable.from(`
-       status code:     ${statusCode}
-       errorName:       ${name}
-       errorMessage:    ${message}
-       errorStack:      ${stack}\n
-       `),
-            fs.createWriteStream(path.join(__dirname, '../../logs/errorHandling.txt'), {
+      status code:     ${statusCode}
+      errorName:       ${name}
+      errorMessage:    ${message}
+      errorStack:      ${stack}\n
+      `),
+            fs.createWriteStream(path.join(__dirname, '../../logs/errorHandling.log'), {
                 flags: 'a',
             }),
         );
     } catch (er) {
-        process.stderr.write(`${console.error(er)}`);
+        process.stderr.write(error.message);
         process.exit(1);
     }
 
-    return res.status(statusCode).json({ statusCode, messageReason });
+    res.status(500).send('Internal server error');
+    next();
 };

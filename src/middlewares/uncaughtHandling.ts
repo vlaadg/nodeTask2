@@ -10,7 +10,7 @@ export const uncaughtException = async (error: Error) => {
     }
 
     fs.appendFileSync(
-        path.join(__dirname, '../../logs/uncaughtExceptions.txt'),
+        path.join(__dirname, '../../logs/uncaughtExceptions.log'),
         `
      time:            ${new Date()}
      errorName:       ${name}
@@ -29,7 +29,7 @@ export const unhandledRejection = async (error: Error, promise: Promise<any>) =>
     }
 
     fs.appendFileSync(
-        path.join(__dirname, '../../logs/unhandledRejection.txt'),
+        path.join(__dirname, '../../logs/unhandledRejection.log'),
         `
      time:                   ${new Date()}
      unhandledRejection:     ${JSON.stringify(promise)}

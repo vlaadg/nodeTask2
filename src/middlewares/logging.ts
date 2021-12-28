@@ -10,7 +10,7 @@ const pipeline = util.promisify(stream.pipeline);
 
 const { PORT } = config;
 
-export const logging = async (req: Request, res: Response, next: NextFunction) => {
+export const logging = async (error: Error, req: Request, res: Response, next: NextFunction) => {
     const requestTime = new Date();
     const processTime = Date.now() - + requestTime;
 
@@ -31,10 +31,10 @@ export const logging = async (req: Request, res: Response, next: NextFunction) =
         params:           ${JSON.stringify(req.params)}
         processing time:  ${processTime} ms
         status code:      ${res.statusCode}\n`),
-            fs.createWriteStream(path.join(__dirname, '../../logs/logging.txt'), { flags: 'a' }),
+            fs.createWriteStream(path.join(__dirname, '../../logs/logging.log'), { flags: 'a' }),
         );
     } catch (er) {
-        process.stderr.write(`${console.error(er)}`);
+        process.stderr.write(`${error.message}`);
         process.exit(1);
     }
     next();

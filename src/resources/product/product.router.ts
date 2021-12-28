@@ -1,16 +1,16 @@
 import { StatusCodes } from 'http-status-codes';
 import { Request, Response, Router } from 'express';
 
-
+import asyncHandler from 'express-async-handler';
 import Product from './product.model';
-
 import productsService from './product.service';
+
 import catchErrors from '../../common/catchErrors';
 
 const router = Router();
 
 router.route('/').get(
-    catchErrors(async (_req: Request, res: Response) => {
+    asyncHandler(async (_req: Request, res: Response) => {
         const products = await productsService.getAll();
 
         res.json(products.map(Product.toResponse));
@@ -18,7 +18,7 @@ router.route('/').get(
 );
 
 router.route('/:id').get(
-    catchErrors(async (req: Request, res: Response) => {
+    asyncHandler(async (req: Request, res: Response) => {
         const {
             id
         } = req.params;
@@ -35,11 +35,12 @@ router.route('/:id').get(
                     msg: 'Product not found'
                 });
         }
+        throw new Error("errror");
     })
 );
 
 router.route('/').post(
-    catchErrors(async (req: Request, res: Response) => {
+    asyncHandler(async (req: Request, res: Response) => {
         const {
             orderId,
             title,
@@ -67,7 +68,7 @@ router.route('/').post(
 );
 
 router.route('/:id').put(
-    catchErrors(async (req: Request, res: Response) => {
+    asyncHandler(async (req: Request, res: Response) => {
         const {
             id
         } = req.params;
