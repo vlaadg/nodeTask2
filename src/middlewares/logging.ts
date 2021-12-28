@@ -26,8 +26,8 @@ export const logging = async (req: Request, res: Response, next: NextFunction) =
         request Time:     ${requestTime}
         method:           ${req.method}
         url:              ${`http://localhost:${PORT}${req.baseUrl + req.url}`}
-        body:             ${JSON.stringify(req.body)}
-        query:            ${JSON.stringify(req.query)}
+        body:             ${JSON.stringify(req.body, null, '\t')}
+        query:            ${JSON.stringify(req.query, null, '\t')}
         params:           ${JSON.stringify(req.params)}
         processing time:  ${processTime} ms
         status code:      ${res.statusCode}\n`),
