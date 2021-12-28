@@ -2,7 +2,7 @@ import { IBaseConsumer, IConsumer } from './consumer.interface';
 
 import Consumer from './consumer.model';
 
-const CONSUMERS: IConsumer[] = [];
+const CONSUMERS: IConsumer[] = [new Consumer()];
 
 const getAll = async (): Promise<IConsumer[]> => CONSUMERS;
 

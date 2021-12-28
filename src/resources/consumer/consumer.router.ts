@@ -1,17 +1,17 @@
 import { Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-
+import asyncHandler from 'express-async-handler';
 import Consumer from './consumer.model';
 import Order from '../order/order.model';
-
 import consumersService from './consumer.service';
+
 import catchErrors from '../../common/catchErrors';
 
 const router = Router();
 
 router.route('/').get(
-  catchErrors(async (_req: Request, res: Response) => {
+  asyncHandler(async (_req: Request, res: Response) => {
     const consumers = await consumersService.getAll();
 
     res.json(consumers.map(Consumer.toResponse));
@@ -19,7 +19,7 @@ router.route('/').get(
 );
 
 router.route('/:id').get(
-  catchErrors(async (req: Request, res: Response) => {
+  asyncHandler(async (req: Request, res: Response) => {
     const {
       id
     } = req.params;
@@ -36,11 +36,13 @@ router.route('/:id').get(
           msg: 'Consumer not found'
         });
     }
+    throw new Error("error");
+    // Promise.reject(Error("Error consumer"));
   })
 );
 
 router.route('/:id/orders').get(
-  catchErrors(async (req: Request, res: Response) => {
+  asyncHandler(async (req: Request, res: Response) => {
     const {
       id
     } = req.params;
@@ -61,7 +63,7 @@ router.route('/:id/orders').get(
 );
 
 router.route('/').post(
-  catchErrors(async (req: Request, res: Response) => {
+  asyncHandler(async (req: Request, res: Response) => {
     const {
       lastName,
       firstName,
@@ -90,7 +92,7 @@ router.route('/').post(
 );
 
 router.route('/:id').put(
-  catchErrors(async (req: Request, res: Response) => {
+  asyncHandler(async (req: Request, res: Response) => {
     const {
       id
     } = req.params;

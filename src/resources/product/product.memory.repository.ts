@@ -1,7 +1,7 @@
 import { IProduct, IBaseProduct } from './product.interface';
 import Product from './product.model';
 
-const PRODUCTS: IProduct[] = []
+const PRODUCTS: IProduct[] = [new Product()]
 
 const getAll = async (): Promise<IProduct[]> => PRODUCTS;
 

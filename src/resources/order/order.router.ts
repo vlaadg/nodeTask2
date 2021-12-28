@@ -1,17 +1,17 @@
 import { Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-
+import asyncHandler from 'express-async-handler';
 import Product from '../product/product.model';
 import Order from './order.model';
-
 import ordersService from './order.service';
+
 import catchErrors from '../../common/catchErrors';
 
 const router = Router();
 
 router.route('/').get(
-    catchErrors(async (_req: Request, res: Response) => {
+    asyncHandler(async (_req: Request, res: Response) => {
         const orders = await ordersService.getAll();
 
         res.json(orders.map(Order.toResponse));
@@ -19,7 +19,7 @@ router.route('/').get(
 );
 
 router.route('/:id').get(
-    catchErrors(async (req: Request, res: Response) => {
+    asyncHandler(async (req: Request, res: Response) => {
         const {
             id
         } = req.params;
@@ -40,7 +40,7 @@ router.route('/:id').get(
 );
 
 router.route('/:id/products').get(
-    catchErrors(async (req: Request, res: Response) => {
+    asyncHandler(async (req: Request, res: Response) => {
         const {
             id
         } = req.params;
@@ -61,7 +61,7 @@ router.route('/:id/products').get(
 );
 
 router.route('/').post(
-    catchErrors(async (req: Request, res: Response) => {
+    asyncHandler(async (req: Request, res: Response) => {
         const {
             consumerId,
             date,
@@ -88,7 +88,7 @@ router.route('/').post(
 );
 
 router.route('/:id').put(
-    catchErrors(async (req: Request, res: Response) => {
+    asyncHandler(async (req: Request, res: Response) => {
         const {
             id
         } = req.params;

@@ -3,7 +3,7 @@ import Order from './order.model';
 import productsRepo from '../product/product.memory.repository';
 
 
-const ORDERS: IOrder[] = [];
+const ORDERS: IOrder[] = [new Order()];
 
 const getAll = async (): Promise<IOrder[]> => ORDERS;
 
